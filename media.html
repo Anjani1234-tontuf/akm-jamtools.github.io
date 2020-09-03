@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>录制video保存成文件下载demo</title>
+</head>
+
+<body>
+    <video id="apple" src="./demo.mp4" controls></video>
+
+    <div>
+        <button id="start">开始录制</button>
+        <button id="stop">结束录制</button>
+        <button id="download">下载</button>
+    </div>
+
+    <script type="text/javascript">
+        var mediaRecorder;
+        var recordedBlobs;
+        var sourceBuffer;
+
+        // 目标视频
+        var targetVideo = document.getElementById('apple');
+        // 绑定按钮
+        var startButton = document.getElementById('start');
+        var stopButton = document.getElementById('stop');
+        var downloadButton = document.getElementById('download');
+
+        startButton.onclick = recordFunc;
+        stopButton.onclick = stopFunc;
+        downloadButton.onclick = downloadFunc;
+
+        function recordFunc() {
+            // mediarecorder的配置项
+            /*
+             * 可用于检测 MIME type 是否支持（不支持mp4）
+             * MediaRecorder.isTypeSupported('video/webm;codecs=h264')
+             */
+            var options = {
+                mimeType: 'video/webm;codecs=h264'
+            };
+            mediaRecorder = new MediaRecorder(stream, options);
+            recordedBlobs = [];
+            // dataavailable 事件, 该事件可用于获取录制的媒体资源
+            mediaRecorder.ondataavailable = handleDataAvailable;
+            // start中如果不传参则会录制成一个Blob，否则会按照参数中的时间分成一段段Blob（单位ms）
+            mediaRecorder.start(100);
+        }
+
+        function stopFunc() {
+            mediaRecorder.stop();
+        }
+
+        function downloadFunc() {
+            var blob = new Blob(recordedBlobs, {
+                type: 'video/webm'
+            });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'test.webm';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // meiareocrder获取到数据可用后触发
+        function handleDataAvailable(event) {
+            if (event.data && event.data.size > 0) {
+                recordedBlobs.push(event.data);
+                console.log(event.data);
+            }
+        }
+
+        // 开始流的捕获
+        var stream = targetVideo.captureStream(25);
+    </script>
+</body>
+
+</html>

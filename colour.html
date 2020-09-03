@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Gradient Color Code Generator Tool</title>
+    <meta content='gradient color palette, text color gradient css generator, colorspace gradient color css generator, gradient button generator, inear-gradient(top to bottom), css color generator' name='Description' />
+    <meta content='gradient color palette, text color gradient css generator, colorspace gradient color css generator, gradient button generator, inear-gradient(top to bottom), css color generator' name='Keywords' />
+    <meta content='index, follow' name='robots' />
+    <meta content='2 days' name='revisit-after' />
+    <meta content='English' name='language' />
+    <meta content='India' name='geo.country' />
+    <meta content='Bihar' name='geo.placename' />
+    <meta content='global' name='distribution' />
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta content='true' name='MSSmartTagsPreventParsing' />
+    <meta content='general' name='rating' />
+    <link href='https://techly360.com/gradient-color-code-generator-tool-script/' rel='canonical' />
+    <style id='page-skin-1' type='text/css'>
+        <!--
+        /*    
+-----------------------------------------------------------------------------------    
+This blog was Created & Modify by Techly360    
+----------------------------------------------------------------------------------- */
+        
+        body {
+            background: linear-gradient(to right, rgb(177, 56, 168), rgb(250, 116, 5));
+        }
+        
+        .title {
+            background-color: #192B3A;
+            border-left: 12px solid #00FF0D;
+            border-right: 12px solid #00FF0D;
+            border-radius: 50px 117px 50px 117px;
+            color: #fdfdfd;
+            padding: 8px;
+            font-size: 22px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-family: "Kanit", sans-serif;
+            color: black;
+        }
+        
+        .title {
+            letter-spacing: 0.4em;
+        }
+        
+        .subtitle {
+            letter-spacing: 0.2em;
+        }
+        
+        .color1,
+        .color2 {
+            width: 3em;
+            height: 3em;
+            cursor: pointer;
+        }
+        
+        .current-bg {
+            font-family: "Source Code Pro", monospace;
+            color: white;
+        }
+        
+        .copy-property {
+            color: black;
+            cursor: grab;
+        }
+        
+        .copy-property:active {
+            cursor: grabbing;
+        }
+        
+        .random-btn {
+            color: black;
+            border-radius: 1rem;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .random-btn:hover {
+            background: steelblue;
+            border: 1px solid steelblue;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .adspacebytechnicalarp {
+            padding: 2em;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .16);
+            border-radius: 5px;
+            margin-top: 1em;
+            background: #fff;
+            text-align: left;
+        }
+        
+        -->
+    </style>
+</head>
+
+<body>
+    <center>
+        <!-- main section -->
+        <section id="main" class="mt-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <h2 class="title text-uppercase font-weight-bold">
+                            Gradient Color Code Generator
+                        </h2>
+                        <div class="adspacebytechnicalarp container">
+                            Demo1
+                        </div>
+                        </br>
+                        <input class="color1 my-4 mr-4" type="color" name="color1" value="#B138A8" />
+                        <input class="color2" type="color" name="color2" value="#FA7405" />
+                        <h4 class="subtitle text-uppercase font-weight-bold">
+                            Current CSS Background
+                        </h4>
+                        <h5 class="current-bg font-weight-bold my-4"></h5>
+                        <p class="copy-property lead font-italic">Click here to copy!</p>
+                        <div class="adspacebytechnicalarp container">
+                            Demo2
+                        </div>
+                        </br>
+                        <button class="random-btn btn btn-light btn-lg mt-3 p-3">  
+                        Generate random  
+                   </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end of main section -->
+    </center>
+    <Script Language='Javascript'>
+        const htmlBody = document.body;
+        const color1 = document.querySelector(".color1");
+        const color2 = document.querySelector(".color2");
+        const currentSelection = document.querySelector(".current-bg");
+        const copyProperty = document.querySelector(".copy-property");
+        const randomButton = document.querySelector(".random-btn");
+
+        function setGradient() {
+            htmlBody.style.background = `linear-gradient(to right, ${color1.value}, ${color2.value})`;
+            currentSelection.textContent = `${htmlBody.style.background};`;
+        }
+
+        function generateRandom() {
+            const randomColor1 = Math.random().toString(16).slice(2, 8).toUpperCase();
+            const randomColor2 = Math.random().toString(16).slice(2, 8).toUpperCase();
+            color1.value = `#${randomColor1}`;
+            color2.value = `#${randomColor2}`;
+            setGradient();
+        }
+
+        function copyText() {
+            const text = currentSelection.innerText;
+            let temp_element = document.createElement("textarea");
+            document.body.appendChild(temp_element);
+            temp_element.value = text;
+            temp_element.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp_element);
+        }
+        window.addEventListener("load", setGradient);
+        color1.addEventListener("input", setGradient);
+        color2.addEventListener("input", setGradient);
+        copyProperty.addEventListener("click", copyText);
+        randomButton.addEventListener("click", generateRandom);
+    </Script>
+</body>
+
+</html>
