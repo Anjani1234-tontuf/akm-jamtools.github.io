@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Word Counter | World's smartest word counter</title>
+    <meta name="description" content="Word Counter">
+    <meta name="keywords" content="word counter, character count, sentence count, speech length">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icon-final.png">
+    <link rel="icon" type="images/png" href="images/icon-final.png">
+    <link rel="apple-touch-icon" href="images/icon-final.png" />
+    <link rel="stylesheet" href="style.css" defer>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" defer>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" defer>
+    <link href="https://drive.google.com/uc?id=1oRgjIDuouPgpu8MP4j20na2NFBtFS7-_" rel="stylesheet" defer>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- JS -->
+</head>
+
+<body ng-app="wordApp" ng-controller="mainController">
+    <!-- Top Bar | Logo & Navigation -->
+    <div class="top-bar">
+        <!-- Company Logo -->
+        <div class="logo">
+            <a href="#" title="">Word Counter</a>
+            <img src="https://drive.google.com/uc?id=1F9Sc4GBAN4ftgvXLPp2fXVveA1Rv0dEa" alt="word counter" />
+        </div>
+        <!-- Top Navigation -->
+        <nav>
+            <!-- User Actions -->
+
+            <span class="mobile" ng-click="toggle = !toggle" ng-class="{'active' : toggle}">
+			    <span class=""></span>
+            <span class=""></span>
+            <span class=""></span>
+            </span>
+        </nav>
+    </div>
+    <!-- End of Top Bar -->
+    <!-- end of loader -->
+    <div class="site-contain" ng-class="{'active' : toggle}">
+        <!-- Home / Top Currencies -->
+        <div class="word-panel">
+            <!-- Wrap Content -->
+            <div class="wrap">
+                <div class="word-count">
+                    <textarea placeholder="Type or paste your text" ng-model="userText" ng-change="checkText()" autofocus>
+			</textarea>
+                    <button type="button" ng-click="clearText()" ng-if="userText"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear Text</button>
+                </div>
+                <div class="cta-results">
+                    <!--<div class="cta">
+				<h1>The smartest word counter available.</h1>
+				<button ng-click="" type="button" class="btn btn-link">Learn More</button>
+			</div>-->
+                    <div class="results">
+                        <span class="headline">Results</span>
+                        <div class="row row-words">
+                            <span>Words</span>
+                            <!--<span>{{wordCount | number : fractionSize}}</span>-->
+                            <span inc-dec-counter value="{{wordCount}}"></span>
+                        </div>
+                        <div class="row row-characters">
+                            <span>Characters</span>
+                            <span inc-dec-counter value="{{characterCount}}"></span>
+                        </div>
+                        <div class="row row-sentences">
+                            <span>Sentences</span>
+                            <span inc-dec-counter value="{{sentenceCount}}"></span>
+                        </div>
+                        <div class="row row-reading">
+                            <span>Grade Level
+					    <img src="https://drive.google.com/uc?id=1XnXcUzrsxQJGE50OMwYAfWb_CIAeRJx7" ng-click="showReadingInfo()" alt="Information on word counter providing reading grade level" />		    
+					</span>
+                            <span>{{readingLevel}}</span>
+                            <div class="info reading-info" ng-hide="readInfo">
+                                <span>How is the Grade Level Determined?</span>
+                                <p>The formulas are based on two factors:</p>
+                                <ul>
+                                    <li>Sentence length as judged by the average number of words in a sentence</li>
+                                    <li>Word length as judged by the average number of syllables in a word.</li>
+                                </ul>
+                                <button typ="button" ng-click="showReadingInfo()">Close</button>
+                            </div>
+                        </div>
+                        <div class="row row-reading row-speach" ng-if="speachTime">
+                            <span>Est. Read Time</span>
+                            <span>{{speachTime}}</span>
+                        </div>
+                        <div class="row row-table" ng-if="wordsArray.length > 0">
+                            <span class="headline">Keyword Density</span>
+                            <!-- | orderObjectBy:'position' -->
+                            <div class="key-chng-contain">
+                                <span class="key-chng" ng-click="updateKeywordDensity('1')">1x</span>
+                                <span class="key-chng" ng-click="updateKeywordDensity('2')">2x</span>
+                                <span class="key-chng" ng-click="updateKeywordDensity('3')">3x</span>
+                            </div>
+                            <div class="line" ng-repeat="item in wordsArray | orderBy:'-phrase.count' | limitTo: 5">
+                                <span>{{item.phrase.id}}</span>
+                                <span>{{item.phrase.count}} 
+							<span class="txt-light">({{item.phrase.avg | number: 2}}%)</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of Wrap Content -->
+        </div>
+        <span class="copy">Your Website Name</span>
+    </div>
+
+    <!-- load angular, ngRoute, ngAnimate -->
+    <script src="http://wordcount.in/angular.js"></script>
+    <script src="http://wordcount.in/angular-animate.js"></script>
+    <script src="https://drive.google.com/uc?id=1ZPOVLfF2KqdKxNa-iWW58TPMAVqmUGws"></script>
+</body>
+
+</html>

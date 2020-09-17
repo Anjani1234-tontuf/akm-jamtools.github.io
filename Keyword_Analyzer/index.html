@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<script language="JavaScript" type="text/javascript" src="jquery-1.9.1.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+	<link href="DataTables-1.9.4/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css">
+	<link href="stylesheets/styles.css" rel="stylesheet">
+</head>
+<body>
+
+	<script>
+    var commonWords=/\b(and|a|an|has|he|to|was|in|were|are|is|will|as|it|if|with|at|its|it's|be|by|on|that|from|the|about|again|all|almost|also|although|always|among|another|any|be|because|been|before|being|between|both|by|can|could|did|do|does|doesn't|'|done|due|during|each|either|enough|from|had|has|have|having|here|i|if|into|is|isn't|itself|just|may|might|most|mostly|must|nor|no|neither|nearly|of|often|on|our|ours|The|his|hers|he's|he|she|she's|overall|perhaps|quite|rather|really|regarding|seem|seems|seen|several|should|show|showewd|shown|shows|significant|significantly|since|so|some|such|than|that|then|their|theirs|there's|therefore|these|they|this|those|through|thus|to|upon|use|used|using|various|very|was|we|were|what|when|which|while|with|within|without|would|however|or|for|the|but|etc|yet)\b/g;
+    commonWords.ignoreCase;
+            $( document ).ready( function() {
+
+                $('form').submit(function(event){
+                        event.preventDefault();
+                        var
+                                keyword_list = $('#searchtext').val().split(" "),
+                                word_list = $('#searchtext').val().split(" "),
+                                nwords = word_list.length;
+                                $('#result').html(nwords + " Total Words in Article");
+                        keyword_dict = {};
+                        for (var i = 0, w; w = keyword_list[i]; i++) {
+                                var w = w.replace(/\W/g,'');
+                                var w = w.replace(commonWords, '');
+                                var w = w.replace(/\d/g, '');
+                                keyword_dict[w] = 0;
+                        }
+                        for (var i = 0, w; w = word_list[i]; i++) {
+                                var w = w.replace(/\W/g,'');
+                                var w = w.replace(commonWords, '');
+                                var w = w.replace(/\d/g, '');
+                                for(var keyword in keyword_dict){
+                                        if (keyword == w){
+                                                keyword_dict[w] += 1;
+                                        }
+                                }
+                        }
+                        
+                        items = '<thead><th>unique keywords</th><th>occurance</th><th>percent of text</th></thead>';
+                        for (keyword in keyword_dict){
+                                var occ = keyword_dict[keyword]*100/nwords;
+                                var c='';
+                                items += '<tr class="'+c+'"><td>'+keyword+'</td><td>'+keyword_dict[keyword]+'</td><td>'+occ.toPrecision(2)+'</td></tr>';
+                            }
+                        console.log(keyword_dict);
+                        $('#result').append('<table>'+items+'<table>');
+                        $('#result table').dataTable();
+                    });
+         });
+    </script>
+
+                <h1>Keyword Density Analyzer</h1>
+                <form>
+                        <label>Article:</label><br>
+                        <textarea rows="25" cols="100" id="searchtext"></textarea><br>
+                        <input class="btn btn-success" id="go" type="submit" value="Submit"></input>
+                </form>
+                <div id="result">
+                        
+                </div>
+        </body>
+</html>

@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Jeff's KeyWord Density</a>
+	    </div>
+
+	  </div><!-- /.container-fluid -->
+	</nav>
+
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-lg-8 col-md-8">
+
+				
+				<div class="panel panel-primary">
+					<div class="panel-heading">Basic example</div>
+					<div class="panel-body">
+						<form>
+						  <div class="form-group">
+							  <!-- title lenght messages -->
+							  <div class="bs-example-bg-classes  msg-box" id='kd-messages-title'></div>
+						    <label for="title">Tittle</label>
+						    <input type="text" class="form-control" id="title" >
+						  </div>
+
+						  <div class="form-group">
+						  <!-- title lenght messages -->
+							  <div class="bs-example-bg-classes  msg-box" id='kd-messages-description'></div>
+						    <label for="description">Description</label>
+						    <textarea class="form-control" id="description" rows="3"></textarea>
+						  </div>
+
+						  <!-- content lenght messages -->
+						  <div class="bs-example-bg-classes  msg-box" id='kd-messages-content'></div>
+						  <div class="form-group">
+						  	<label for="texto">Content</label>
+						  	<textarea class="form-control" rows="15" id="texto"></textarea>
+						  </div>
+						  <button type="submit" class="btn btn-default">Submit</button>
+						</form>
+					</div>
+					<div class="panel-footer"></div>
+				</div>
+			</div>
+
+			<div class=" col-lg-4 col-md-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Keyword Density</div>
+					<div class="panel-body bs-example-bg-classes" id="kd-result" >
+						<p class="bg-warning">word density</p>
+					</div>
+					<div class="panel-footer"> It shows you all the words who are beyond the standar 25% of density.</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+		$(document).ready(function() {
+			$('#texto').change(function(){
+				var field = $(this).val();
+				var getDensity = $.getDensity(field);
+				$.showList(getDensity);
+				$.contentAnalize(field);
+			});
+			$('#title').change(function(){
+				$.titleAnalize($(this).val());
+			});
+			$('#description').change(function(){
+				$.descriptionAnalize($(this).val());
+			});
+		});
+		 
+
+			var HtmlObject = 'p';
+			var ObjectClass = 'bg-danger';
+			var ResultContent = $('#kd-result');
+
+		 $.getDensity = function(text){
+		 	var list;
+		 	var result;
+		 	var arr;
+		 	arr = $.toArray(text);
+		 	list = $.wordList(arr);
+		 	result = $.density(text, list);
+		 	return result;
+		 	
+		 }
+
+		 $.density = function (text, array){
+		 	var counter = 0 ;
+		 	var density = 0 ;
+		 	var wordsDensity = new Array;
+		 	var text = $.toArray(text);
+		 	var val;
+		 	for(var i=0;i<array.length;i++) {	
+		 		counter = $.count(text, array[i]);
+		 		density = Math.round(((counter * 100) / text.length));
+		 		val = array[i] ;
+		 		if(density > 25)
+		 			wordsDensity.push(density + '% ' + val);
+		 	}
+		 	return wordsDensity;
+		 }
+
+		 $.count = function (array, value) {
+		  var counter = 0;
+		  for(var i=0;i<array.length;i++) {
+		    if (array[i] === value) counter++;
+		  }
+		  return counter;
+		}
+
+		$.toArray = function(text){
+			var arr;
+			arr = $.toText(text);
+			arr = arr.split(' ');
+			arr = $.grep(arr,function(n){
+			  return(n);
+			});
+			return arr;
+
+		}
+
+		$.wordList = function(array){
+			var newArray;
+			newArray = $.unique(array);
+			return newArray;
+		}
+
+		$.showList = function(array){
+			$(ResultContent).empty();
+			$.each(array, function(index, val) {
+		    	$.htmlBuilder(val);
+		});
+		}
+
+		$.wordCounter =function(text){
+			var arr;
+			arr = $.toArray(text);
+			return arr.length;
+		}
+
+		$.htmlBuilder = function(value){
+
+		newObj = $(document.createElement(HtmlObject)).attr({
+				class : ObjectClass
+			}).appendTo(ResultContent);
+		newObj.append(value);
+		}
+
+		$.toText = function( str ) {
+		    str=str.toString();
+		    return str.replace(/<\/?[^>]+>/gi, '');
+		}
+
+		var contentMsgBox = '#kd-messages-content';
+		$.contentAnalize = function(text){
+			var arr;
+			var shortMessage = 'It seems to be a little short post.';
+			var medMessage = 'It Looks like a good post.';
+			var longMessage = 'It looks like a Great post! but, be carefull and make sure that all the information is necessary';
+			var shortClass = 'bg-warning';
+			var medClass = 'bg-success';
+			var longClass = 'bg-primary';
+			var message;
+			arr = $.toArray(text);			
+			words = arr.length;
+			if(words < 300){
+				message = shortMessage;
+				msgClass = shortClass;
+			}
+			if(words > 300 && words < 500 ){
+				message = medMessage;
+				msgClass = medClass;
+			}
+			if(words > 500){
+				message = longMessage;
+				msgClass = longClass;
+			}
+			$.buildMessage(message, msgClass, contentMsgBox);
+		}
+
+
+		var titleMsgBox = '#kd-messages-title';
+		$.titleAnalize = function(title){
+			var shortMessage = 'It seems to be a little short title.';
+			var medMessage = 'It Looks like a good title.';
+			var longMessage = 'Seems to be a little long title, make it short for better results.';
+			var shortClass = 'bg-warning';
+			var medClass = 'bg-success';
+			var longClass = 'bg-danger';
+			var message;
+			var chars;
+
+			chars = title.length;
+			console.log(chars);
+			if(chars < 60){
+				message = shortMessage;
+				msgClass = shortClass;
+			}
+			if(chars > 60 && chars < 67 ){
+				message = medMessage;
+				msgClass = medClass;
+			}
+			if(chars > 67){
+				message = longMessage;
+				msgClass = longClass;
+			}
+			$.buildMessage(message, msgClass, titleMsgBox);
+		}
+
+		var descriptionMsgBox = '#kd-messages-description';
+		$.descriptionAnalize = function(description){
+			var shortMessage = 'It seems to be a little short description.';
+			var medMessage = 'It Looks like a good description.';
+			var longMessage = 'Seems to be a little long description, make it short for better results.';
+			var shortClass = 'bg-warning';
+			var medClass = 'bg-success';
+			var longClass = 'bg-danger';
+			var message;
+			var chars;
+
+			chars = description.length;
+			if(chars < 150){
+				message = shortMessage;
+				msgClass = shortClass;
+			}
+			if(chars > 150 && chars < 155 ){
+				message = medMessage;
+				msgClass = medClass;
+			}
+			if(chars > 155){
+				message = longMessage;
+				msgClass = longClass;
+			}
+			$.buildMessage(message, msgClass, descriptionMsgBox);
+		}
+
+
+		$.buildMessage = function(message, msgClass, box){
+			$(box).empty();
+			newObj = $(document.createElement('p')).attr({
+				class : msgClass
+			}).appendTo(box);
+			newObj.append(message);
+		}
+
+
+		</script>
+
+  </body>
+</html>

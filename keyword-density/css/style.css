@@ -1,0 +1,13 @@
+.bs-example-bg-classes p {
+padding: 15px;
+}
+
+p {
+margin: 0 0 10px;
+}
+.msg-box{
+	margin-right: 0;
+	margin-left: 0;
+	margin-bottom: 5px;
+	margin-top:  5px;
+}
