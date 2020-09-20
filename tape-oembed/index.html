@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="http://www.tape.tv/assets/application-28f4c49af9f16cfed00657ce96a7b64e.css">
+
+        <!--[if lt IE 9]>
+            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
+        <![endif]-->
+    </head>
+    <body>
+
+        <div class="main-wrapper">
+            <h2>tape.tv embed code generator</h2>
+
+            <form action="">
+                <label for="url">Paste your tape.tv link here:</label>
+                <input type="text" placeholder="tape.tv url" id="url" tabindex="1" autofocus>
+
+                <label for="embedcode">Embed code</label>
+                <textarea tabindex="2" id="embedcode" readonly></textarea>
+                <span class="error"></span>
+            </form>
+
+            <p>
+            <button tabindex="3" id="btn_copy" href="#" class="btn btn-blue btn-md" title="Copy to clipboard" data-clipboard-target="fe_text" data-clipboard-text="Embed code">Copy</button>
+</p>
+
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+
+        <script src="js/vendor/ZeroClipboard.min.js"></script>
+        <script src="js/main.js"></script>
+
+    </body>
+</html>

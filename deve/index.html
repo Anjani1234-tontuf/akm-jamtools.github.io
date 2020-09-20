@@ -1,0 +1,71 @@
+<HTML>
+<!-- Dave Reed       randSeq.html     8/10/01 -->
+<!--                                          -->
+<!-- This page generates random sequences of  -->
+<!-- letters.  The number of sequences and    -->
+<!-- their length is specified in text boxes. -->
+<!---------------------------------------------->
+
+<HEAD>
+    <STYLE TYPE="text/css">
+        INPUT {
+            font-family: Courier, Monospace
+        }
+    </STYLE>
+
+    <TITLE> Random Letter Sequence Generator </TITLE>
+
+    <SCRIPT LANGUAGE="JavaScript" SRC="random.js"></SCRIPT>
+
+    <SCRIPT LANGUAGE="JavaScript">
+        function generateRandSeq(len, letters)
+        // Assumes: len >= 0
+        // Returns: random sequence of letters, length len
+        {
+            var i, seq = "";
+            for (i = 1; i <= len; i = i + 1) {
+                seq += randomChar(letters);
+            }
+            return seq;
+        }
+    </SCRIPT>
+</HEAD>
+
+<BODY>
+    <CENTER>
+        <H2>Random Letter Sequence Generator</H2>
+
+        <HR>
+
+        <FORM NAME="generator">
+            <TABLE>
+                <TR>
+                    <TD>Number of random letter sequences to generate:
+                        <TD>
+                            <INPUT TYPE="text" NAME="numSeq" SIZE=4 VALUE=1>
+                            <TR>
+                                <TD>Length of each random letter sequence:
+                                    <TD>
+                                        <INPUT TYPE="text" NAME="lenSeq" SIZE=2 VALUE=3>
+                                        <TR>
+                                            <TD>Letters to choose from:
+                                                <TD>
+                                                    <INPUT TYPE="text" NAME="letters" SIZE=26 VALUE="abcdefghijklmnopqrstuvwxyz">
+            </TABLE>
+
+            <P>
+                <INPUT TYPE="button" VALUE="Click to generate letter sequences" ONCLICK="document.generator.output.value = '';
+                    for(i=1;i<=document.generator.numSeq.value;i=i+1) {
+                      document.generator.output.value += 
+                            generateRandSeq(document.generator.lenSeq.value,
+                                            document.generator.letters.value) + ' ';
+                    };">
+
+                <P>
+                    <TEXTAREA NAME="output" ROWS=10 COLS=40 WRAP VALUE=""></TEXTAREA>
+        </FORM>
+    </CENTER>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,905 @@
+<html>
+<head>
+
+<style>
+* {
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  text-align:center;
+}
+body {
+  /*https://s3-us-west-2.amazonaws.com/s.cdpn.io/174286/youtube_embed_code_generator.png*/
+  background: url('https://3.bp.blogspot.com/-acjmaIz4jmY/V-Octm9h9nI/AAAAAAAADMY/WfJ37bMrgCskiPhjLh7XVZQ2FqjYHWtLgCLcB/s320/youtube_embed_code_generator2.png');
+}
+label {
+  color: #DE3259;
+  font-size: 1em;
+  font-weight: 700;
+}
+small {
+    color: darkorange;
+}
+a {
+  color: #A9161D;
+}
+
+label,
+select,
+button,
+.btn,
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"] input[type="button"] {
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus,button:focus {
+  outline: none;
+}
+
+select {
+  padding: 7px;
+  margin: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+  -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+  box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+  background: #f8f8f8;
+  color: #696969;
+  border: none;
+  outline: none;
+  display: inline-block;
+  appearance: none;
+  cursor: pointer;
+}
+option{
+  font-size:medium;
+}
+
+fieldset {
+  border: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.7em;
+  font-weight: 700;
+  color: #D4215B;
+  margin-bottom: 24px; 
+}
+
+h2 {
+  color: #777;
+  font-size: 1em;
+  font-weight: 700;
+}
+p{
+  padding: 5px 25px;;
+}
+
+.ytembed {
+  border: 0;
+  background: #fff;
+  border-radius: 6px;
+  padding-top: 30px;
+  min-width: 200px;
+  width: 55%;
+  margin: 50px auto;
+}
+
+input,textarea {
+  width: 94%;
+  background: #f5f5f5;
+  border: 0;
+  padding: 3%;
+  border-radius: 6px;
+  margin: 0 auto!important;
+  border: 1px solid #eee;
+}
+
+#preview {
+  color: #4F5A65;
+  font-weight: bold;
+  width: 94%;
+  background: rgba(226, 155, 155, 0.74);
+  border: 0;
+  padding: 3%;
+  border-radius: 6px;
+  margin-top: 10px;
+  border: 1px solid #eee;
+  text-align: center;
+  margin-bottom: 10px;
+  overflow: auto;
+}
+
+#txtOutput {
+  font-size: 1em;
+  text-align: center;
+  height: 130px;
+  color: #777;
+  color: beige;
+  background: rgb(202, 80, 80);
+  font-size: 18px;
+}
+
+.btn {
+  position: relative;
+  width: 40%;
+  min-width:150px;
+  word-wrap: break-word;
+  padding: 20px;
+  border-radius: 6px;
+  border: 0;
+  background:linear-gradient(20deg,#960C39 25%, #DE3637 75%, #DE3259 50%);
+  font-size: 1.2em;
+  color: #fff;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .1);
+  box-shadow: 0px 3px 0px #8C0E5A;
+}
+.btn:active {
+  top: 3px;
+  box-shadow: none;
+}
+
+
+/*  SECTIONS  */
+
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+/*  COLUMN SETUP  */
+
+.col {
+  display: block;
+  float: left;
+  margin: 1% 0 1% 1%;
+}
+
+.col:first-child {
+  margin-left: 0;
+}
+/*  GROUPING  */
+
+.group:before,
+.group:after {
+  content: "";
+  display: table;
+}
+
+.group:after {
+  clear: both;
+}
+
+.group {
+  zoom: 1;
+  /* For IE 6/7 */
+}
+/*  GRID OF TWO  */
+
+.span_2_of_2 {
+  width: 100%;
+}
+
+.span_1_of_2 {
+  width: 49.5%;
+}
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 480px) {
+  .col {
+    margin: 1% 0 1% 0%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .span_2_of_2, .span_1_of_2 {
+    width: 100%;
+  }
+}
+
+footer {
+  text-align: center;
+  color: white;
+  font-weight:bold;
+}
+footer a {
+  color: white;  
+}
+
+/* SWITCH*/
+
+.switch {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 16px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.26);
+  -webkit-transition: background 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.switch::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 24px;
+  height: 24px;
+  background: #fafafa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+  border-radius: 50%;
+  -webkit-transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), background 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), background 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.switch:active::before {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28), 0 0 0 20px rgba(255, 0, 0, 0.22)
+}
+
+input:checked + .switch {
+  background: rgba(255, 0, 29, 0.59);
+}
+
+input:checked + .switch::before {
+  left: 20px;
+  background: #FF1236;
+}
+
+input:checked + .switch:active::before {
+  box-shadow: 0 2px 8px rgba(253, 0, 0, 0.28), 0 0 0 20px rgba(253, 0, 0, 0.2);
+}
+
+/*Media Queries for Responsive Form */
+@media all and (max-width: 650px) and (min-width: 200px) {
+  .ytembed {
+    width: 100%!important;
+  }
+  #disqus_thread {
+    width: 80%!important;
+  }
+  h1 {
+    font-size: 1.7em;
+  }
+}
+
+@media all and (max-width: 1300px) and (min-width: 650px) {
+  .ytembed, #disqus_thread {
+    width: 80%!important;
+  }
+}
+
+input[disabled],select[disabled] {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzhhYWGMYAEYB8RmROaABADeOQ8CXl/xfgAAAABJRU5ErkJggg==) repeat;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+}
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px red;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: crimson;
+}
+
+/* Placeholder Color */
+#txtOutput::-webkit-input-placeholder {
+  color: #dadfe1;
+}
+#txtOutput:-moz-placeholder {
+  /* FF 4-18 */  
+  color: #dadfe1;
+}
+#txtOutput::-moz-placeholder {
+  /* FF 19+ */  
+  color: #dadfe1;
+}
+#txtOutput:-ms-input-placeholder {
+  /* IE 10+ */  
+  color: #dadfe1;
+}
+
+
+
+*[title] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+*[title]:before,
+*[title]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+*[title]:before {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -80px;
+  padding: 7px;
+  width: 160px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(title);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+*[title]:after {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 5px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+*[title]:hover:before,
+*[title]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+#disqus_thread{
+  margin:0 auto;
+}
+
+</style>
+
+<head>
+
+< body>
+<!-- This tool was developed by Shan Eapen Koshy
+All Rights Reserved.
+Ask Permission to use at shaneapen@gmail.com
+-->
+
+<body>
+  <div class="ytembed">
+    <header>            
+        <h1>Youtube Embed Code Generator</h1>
+        <p><b>Codegena Youtube Embed Code Generator is a web tool for generating customized embed code for youtube videos. It's features include asynchronous youtube player(load on click), responsive video player, adjustable youtube start time,adjustable youtube end time,disable youtube html5 player,create youtube playlist, youtube flash player and more.<br/><br/>
+          Check out our new <a href="https://codegena.com/generator/iframe-code-generator" target="_blank">HTML5 iFrame Generator</a></b> 
+        </p>
+      <noscript><b style="color:red;font-size:20px;">Please enable JavaScript in your browser to use this site.</b></noscript>      
+          
+    </header>
+    <form align="center">
+      <!--Share It Buttons  START-->
+      <div class="share">
+        <span class='st_plusone_hcount' displayText='Google +1'></span>
+        <span class='st_facebook_hcount' displayText='Facebook'></span>
+        <span class='st_twitter_hcount' displayText='Tweet'></span>
+        <span class='st_sharethis_hcount' displayText='ShareThis'></span>
+      </div>
+      <!--Shareit END-->
+      <fieldset>
+        <br />
+        <!--Video ID,Width,Height-->
+        <label>Required Parameters</label>
+        <br />
+        <br />
+        <input placeholder="Video URL / Playlist URL" type="url" id="videoID" />
+        <br />
+        <div class="section group">
+          <div class="col span_1_of_2">
+            <input placeholder="Width (px)" type="number" id="width" onkeyup="calcSize()" min="200" />
+          </div>
+          <div class="col span_1_of_2">
+            <input placeholder="Height (px)" type="number" id="height" onkeyup="calcSize()" min="200" />
+          </div>
+        </div>
+        <br/>
+
+        <label>Codegena Special Parameters</label>
+        <br/>
+        <br/>
+        <!--ASYNC-->
+        <div class="section group">
+          <div class="col span_1_of_2">
+            <h2 title="Check this option to load youtube player that loads on clicking thumbnail.">Load Async Player:</h2>
+          </div>
+          <div class="col span_1_of_2">
+            <input id="async" value="1" type="checkbox" hidden="hidden" />
+            <label for="async" class="switch"></label>
+          </div>
+        </div>
+        <div class="section group">
+          <div class="col span_1_of_2">
+            <h2 title="Set your thumbnail image for the async player here">Youtube Embed Thumbnail:<br/><small>Async Player only</small></h2>
+          </div>
+          <div class="col span_1_of_2">
+            <input placeholder="Image URL" type="url" id="thumbnail" disabled />
+          </div>
+        </div>
+        <br/>
+
+        <div id="optionals">
+          <!--Responsive-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Check this option to make the embed player responsive. ">Responsive Video Player:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="responsive" value="1" type="checkbox" hidden="hidden" />
+              <label for="responsive" class="switch"></label>
+            </div>
+          </div>
+          <label>Advanced Parameters</label>
+          <!--Player-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Select the type of player: html5 or flash.">Player Technology:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <select id="playerType">
+                <option value="embed" selected>HTML 5</option>
+                <option value="v">Flash</option>
+
+              </select>
+            </div>
+          </div>
+          <!--Theme-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Choose your youtube player theme if you selected flash player."> Player Theme:<br/><small>Works only for flash player</small></h2>
+            </div>
+            <div class="col span_1_of_2">
+              <select id="theme">
+                <option value="dark" selected>Dark</option>
+                <option value="light">Light</option>
+
+              </select>
+            </div>
+          </div>
+
+
+          <!--Color-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2>Progress Bar Color:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <select id="color">
+                <option value="red" selected>Red</option>
+                <option value="white">White</option>
+
+              </select>
+            </div>
+          </div>
+          <br/>
+
+          <!--Autoplay-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2>Youtube Autoplay:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="autoplay" value="1" type="checkbox" hidden="hidden" />
+              <label for="autoplay" class="switch"></label>
+            </div>
+          </div>
+
+          <!--Disable Keyboard-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Check this option to disable the keyboard controls for the youtube video.">Disable Keyboard:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="disablekb" value="1" type="checkbox" hidden="hidden" />
+              <label for="disablekb" class="switch"></label>
+            </div>
+          </div>
+          <br/>
+
+          <!--Hide Video Controls-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2>Hide Youtube Controls:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <select id="autohide">
+                <option value="2" selected>Auto</option>
+                <option value="1">Hide</option>
+                <option value="0">Visible Throughout</option>
+
+              </select>
+            </div>
+          </div>
+          <br/>
+
+          <!--Show Captions-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Enable this if you want to load the captions for that video. Works only if user uploaded captions are available">Show Youtube Captions:<br/><small>Doesn't work for auto generated captions</small></h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="showcc" value="1" type="checkbox" hidden="hidden" />
+              <label for="showcc" class="switch"></label>
+            </div>
+          </div>
+
+          <!--Hide Youtube Logo-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2>Hide Youtube Logo:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="logo" value="1" type="checkbox" hidden="hidden" />
+              <label for="logo" class="switch"></label>
+            </div>
+          </div>
+
+          <!--Hide Fullscreen Button-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2>Hide Fullscreen Button:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="fullscreen" value="0" type="checkbox" hidden="hidden" />
+              <label for="fullscreen" class="switch"></label>
+            </div>
+          </div>
+          
+          <!--Show Border-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Check this option to show border around the video player">Show Border:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="border" type="checkbox" hidden="hidden" />
+              <label for="border" class="switch"></label>
+            </div>
+          </div>
+
+
+          <!--Hide Top bar-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Check this option to hide the title bar">Hide Top Bar:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="showinfo" value="0" type="checkbox" hidden="hidden" />
+              <label for="showinfo" class="switch"></label>
+            </div>
+          </div>
+
+          <!--Related Video at End-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2>Hide Related Video at End:</h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input id="relatedvideo" value="0" type="checkbox" hidden="hidden" />
+              <label for="relatedvideo" class="switch"></label>
+            </div>
+          </div>
+          <br/>
+          <!--Playlist-->
+          <div class="section group">
+            <div class="col span_1_of_2">
+              <h2 title="Enter the list of video IDs seperated by comma to create a new playlist">Create New Youtube Playlist: <br/><small> (Enter video ID's seperated by comma)</small></h2>
+            </div>
+            <div class="col span_1_of_2">
+              <input placeholder="ID_1,ID_2,ID_3" type="text" id="playlist" />
+            </div>
+            <br />
+
+
+            <!--Start Time -->
+            <div class="section group">
+              <div class="col span_1_of_2">
+                <h2 title="Enter the video start time here in the time string format.">Youtube Start Time:</h2>
+              </div>
+              <div class="col span_1_of_2">
+                <input placeholder="hh:mm:ss" type="text" id="start" min="0" />
+              </div>
+            </div>
+            <br/>
+            <!--Stop Time -->
+
+            <div class="section group">
+              <div class="col span_1_of_2">
+                <h2 title="Enter the video end time here in the time string format.">Youtube End Time:</h2>
+              </div>
+              <div class="col span_1_of_2">
+                <input placeholder="hh:mm:ss" type="text" id="stop" min="0" />
+              </div>
+            </div>
+            <br/>
+
+            <!--Annotation Defaults-->
+            <div class="section group">
+              <div class="col span_1_of_2">
+                <h2>Show Youtube Annotations:</h2>
+              </div>
+              <div class="col span_1_of_2">
+                <select id="annotation">
+                  <option value="1" selected>Show by default</option>
+                  <option value="3">Hide by default</option>
+
+                </select>
+              </div>
+            </div>
+            <br/>
+          </div>
+        </div>
+        <!--Generate Button-->
+        <center>
+          <input type="button" class="btn" id="generatebtn" value="Generate Code" onclick="youtubeEmbedCode()" />
+          <input type="button" class="btn" value="Clear" onClick="refresh()" />
+        </center>
+        <br />
+
+      
+<textarea readonly onfocus="SelectAll('txtOutput');" id="txtOutput"  cols="40" rows="5">Generated Code</textarea>
+
+        <!--Preview Area-->
+        <center>
+          <div id="preview">
+            <p>You will see preview here</p>
+          </div>
+
+        </center>
+      </fieldset>
+    </form>
+  </div>
+  <!--ytembed div close -->
+
+  <button class="show-comments" style="padding:5px;color:black;background:white;border:none;text-transform:uppercase;">Load Comments</button>
+<div id="disqus_thread"></div>
+  
+  
+  <footer>Made with <span style="color:red;font-size:25px;">&#9829</span> by <a href="https://www.codegena.com" target="_blank">Codegena</a></footer>
+<script>
+/*This program was designed and developed by Codegena.com
+ALL RIGHTS RESERVED
+*/
+// https://developers.google.com/youtube/player_parameters?hl=en#Parameters
+
+var pMODE = "";
+var filler = "";
+var player = "";
+
+swal.setDefaults({
+  confirmButtonColor: '#FF5F6E'
+});
+
+//%%%%%%%%%%%%%%%%%%% ASYNC PLAYER CHECK %%%%%%%%%%%%%%%%%%%%%%%%
+
+async.onchange = function() {
+  var val = (async.checked == true) ? 1 : 0;
+  if (val == 1) {
+    responsive.checked = true;
+    thumbnail.disabled = false;
+    playerType.disabled = autoplay.checked = true;
+  } else if (val == 0) {
+    thumbnail.disabled = true;
+    playerType.disabled = autoplay.checked = false;
+  }
+}
+autoplay.onchange = function() {
+  if (async.checked == true && autoplay.checked == false) {
+    swal("Autoplay=Disabled", "Disabling autoplay for ASYNC player would cause 'double click to play' behaviour", "warning");
+  }
+}
+
+//$$$$$$$$$$$$$ HEIGHT & WIDTH FUNCTION $$$$$$$$$$$$$$$$$$
+var timer;
+
+function calcSize() {
+  var height = document.getElementById("height").value;
+  var width = document.getElementById("width").value;
+  if (height != "") {
+    document.getElementById("width").placeholder = "Autocalculate in 1.5s";
+  } else if (width != "") {
+    document.getElementById("height").placeholder = "Autocalculate in 1.5s";
+  } else if (height == "" && width == "") {
+    document.getElementById("width").placeholder = "Width (px)";
+    document.getElementById("height").placeholder = "Height (px)";
+  }
+  clearTimeout(timer);
+  timer = setTimeout(function validate() {
+    if (height == "" && width != "") {
+      clearTimeout(timer);
+      document.getElementById("height").value = Math.round(width / 1.7);
+    } else if (height != "" && width == "") {
+      clearTimeout(timer);
+      document.getElementById("width").value = Math.round(height * 1.7);
+    }
+  }, 1500);
+
+} //$$$$$$$$$$$$$ HEIGHT & WIDTH FUNCTION END $$$$$$$$$$$$$$$$$$
+
+//############ MAIN FUNCTION START ##########################
+function youtubeEmbedCode() {
+
+  var videoID = document.getElementById("videoID").value;
+  var height = document.getElementById("height").value;
+  var width = document.getElementById("width").value;
+  var responsive = document.getElementById("responsive");
+  var playerType = document.getElementById("playerType").value;
+  var theme = "&theme=" + document.getElementById("theme").value;
+  var barColor = document.getElementById("color");
+  var autoplay = document.getElementById("autoplay");
+  var keyboard = document.getElementById("disablekb");
+  var autohide = "&autohide=" + document.getElementById("autohide").value;
+  var captions = document.getElementById("showcc");
+  var logo = document.getElementById("logo");
+  var fullscreen = document.getElementById("fullscreen");
+  var playlist = document.getElementById("playlist");
+  var showinfo = document.getElementById("showinfo");
+  var related = document.getElementById("relatedvideo");
+  var start = document.getElementById("start");
+  var stop = document.getElementById("stop");
+  var annotation = document.getElementById("annotation");
+  var thumbnail = document.getElementById("thumbnail");
+  var border = document.getElementById("border");
+  var preview = document.getElementById('preview');
+  var txtOutput = document.getElementById('txtOutput');
+  var responsiveCode, divClose, code, params;
+
+  videoID = extractVideoID(videoID);
+
+  if (height == "" && width == "") {
+    height = 294;
+    width = 500;
+  }
+
+  //Responsive Code 
+  if (responsive.checked != true) {
+    responsiveCode = divClose = "";
+  } else {
+    responsiveCode = "<style>.codegena{position:relative;width:100%;height:0;padding-bottom:56.27198%;}.codegena iframe{position:absolute;top:0;left:0;width:100%;height:100%;}/*Youtube Embed Code : Created with Codegena.com */</style><div class=\"codegena\">";
+    divClose = "</div>";
+  }
+  //Condtional Assignments   
+  autoplay = (autoplay.checked == true) ? "&autoplay=1" : "";
+  keyboard = (keyboard.checked == true) ? "&keyboard=1" : "";
+  captions = (captions.checked == true) ? "&cc_load_policy=1" : "";
+  logo = (logo.checked == true) ? "&modestbranding=1" : "";
+  border = (border.checked == true) ? "frameborder=\"1\"" : "frameborder=\"0\"";
+  fullscreen = (fullscreen.checked == true) ? "&fs=0" : "";
+  showinfo = (showinfo.checked == true) ? "&showinfo=0" : "";
+  related = (related.checked == true) ? "&rel=0" : "";
+  playlist = (playlist.value != "") ? "&playlist=" + playlist.value : "";
+  barColor = (barColor.value != "red") ? "&color=white" : "";
+  start = (start.value != "") ? "&start=" + timeInS(start.value) : "";
+  stop = (stop.value != "") ? "&end=" + timeInS(stop.value) : "";
+  annotation = (annotation.value != 1) ? "&iv_load_policy=" + annotation.value : "";
+  thumbnail = (thumbnail.value != "") ? " src='" + thumbnail.value + "'" : getThumb(videoID);
+  params = "data-params='" + filler + theme + autoplay + barColor + autohide + keyboard + captions + logo + fullscreen + showinfo + related + playlist + start + stop + annotation + "'";
+
+  var async = document.getElementById('async');
+  if (async.checked == true) {
+    code = "<div class='youtube' id='" + pMODE + videoID + "' " + params + thumbnail + "style='width:" + width + "; height:" + height + ";'></div>" + "<script src='https://codegena.com/assets/js/youtube-embed.js'></script" + ">";
+  } else {
+    code = responsiveCode + "<iframe width='" + width + "' height='" + height + "' src=\"https://www.youtube.com/" + playerType + "/" + pMODE + videoID + filler + theme + barColor + autoplay + keyboard + autohide + captions + logo + fullscreen + playlist + showinfo + related + start + stop + annotation + "\"" + border + "></iframe>" + divClose;
+  }
+  //Backlink Code  
+  code += "<div style='font-size: 0.8em'><a href='https://codegena.com/generator/Youtube-Embed-Code-Generator.html'>Create customized YouTube embed code</a></div>";
+
+  //Prints "no preview " message for ajax and flash players
+  if (playerType == 'v' || async.checked == true) {
+    preview.innerHTML = "<p>Preview may not work with flash player & Async Player!</p><br/>";
+    preview.innerHTML += code;
+  } else {
+    preview.innerHTML = code;
+  }
+  txtOutput.innerHTML = code;
+
+} // Main Function Close
+
+//############ EXTRACT VIDEO/PLAYLIST ID ################
+
+function extractVideoID(vidID) {
+  if (vidID == "" || vidID.length < 11) {
+    sweetAlert("Error", "No video ID detected.Please enter a video/playlist URL. Placeholder video is used.", "error");
+    pMODE = "";
+    return "ffiJNSy8CBA?";
+  }
+  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+  var match = vidID.match(regExp);
+  var list = vidID.match("list=([a-zA-Z0-9\-\_]+)&?");
+  list = list ? list[1] : "";
+  if (match && match[7].length == 11) {
+    pMODE = "";
+    filler = "?";
+    return (match[7]);
+  } else if (list != "") {
+    pMODE = "videoseries?list=";
+    filler = "";
+    return list;
+  } else {
+    swal("Oops..", "Could not extract video/playlist ID", "error");
+    return "VIDEO_ID";
+  }
+}
+
+function getThumb(vidID) {
+  if (vidID.length == 11 || vidID.length < 14) {
+    return " src='http://i.ytimg.com/vi/" + vidID + "/hqdefault.jpg'";
+  } else {
+    return " src='https://codegena.com/assets/images/no_image_available.jpg'";
+  }
+}
+
+function timeInS(str) {
+  var p = str.split(':'),
+    s = 0,
+    m = 1;
+  while (p.length > 0) {
+    s += m * parseInt(p.pop(), 10);
+    m *= 60;
+  }
+  return s;
+}
+
+//############SELECT ALLt#########################
+function SelectAll(txtOutput) {
+  document.getElementById(txtOutput).focus();
+  document.getElementById(txtOutput).select();
+}
+
+//############ RESET ##########################
+function refresh() {
+  var allChildNodes = document.getElementById("optionals").getElementsByTagName('*');
+  for (var i = 0; i < allChildNodes.length; i++) {
+    allChildNodes[i].disabled = false;
+  }
+  document.getElementsByTagName("form")[0].reset();
+  document.getElementById("preview").innerHTML = "You will see preview here";
+
+}
+
+//Load Disqus on click with jquery
+$(document).ready(function() {
+    $('.show-comments').on('click', function(){
+      $("#disqus_thread").css({"background-color": "white", "padding": "24px","border-radius":"5px","width":"50%","min-width":"200px"});
+          var disqus_shortname = 'codegena'; // Replace this value with *your* username.
+
+          // ajax request to load the disqus javascript
+          $.ajax({
+                  type: "GET",
+                  url: "//" + disqus_shortname + ".disqus.com/embed.js",
+                  dataType: "script",
+                  cache: true
+          });
+          // hide the button once comments load
+          $(this).fadeOut();
+    });
+});
+
+</script>
+
+</body>
+</html>
